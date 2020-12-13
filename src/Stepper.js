@@ -11,6 +11,7 @@ import AboutYou from "./AboutYou";
 import { arrInitialData } from "./Data";
 import get from "lodash/get";
 import Finish from './Finish'
+import cloneDeep from 'lodash/cloneDeep';
 
 const useStyles = makeStyles({
   root: {
@@ -35,32 +36,23 @@ const useStyles = makeStyles({
     marginTop: "25px",
     borderRadius: "10px",
   },
-  stepper: {
-    backgroudColor: "#1badb0",
-  },
   card: {
-    padding: "15px 30px",
+    padding: '0px 20px 30px 20px'
   },
   header: {
-    padding: "25px 0 25px 0",
     width: "100%",
-    backgroundColor: "#000000",
+    margin: '55px 0 20px 0'
   },
   title: {
-    color: "#ffffff",
+    color: "#000000",
   },
   title_primary: {
-    color: "#1badb0",
+    fontSize: '20px',
+    fontWeight: 'bold'
   },
   bottom_buttons: {
     display: "flex",
     flexDirection: 'column',
-  },
-  completed: {
-    backgroundColor: "#1badb0",
-  },
-  active: {
-    backgroundColor: "#1badb0",
   },
 });
 
@@ -73,12 +65,10 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-  const [arrGlobalState, setGlobalState] = React.useState(() => [
-    ...arrInitialData,
-  ]);
+  const [arrGlobalState, setGlobalState] = React.useState(() => cloneDeep(arrInitialData));
 
   const onHandleItemSelect = (strId) => {
-    const cloneState = [...arrGlobalState];
+    const cloneState = cloneDeep(arrGlobalState);
     const findSelectedObj = cloneState.find((curr) => curr.id === strId);
 
     const getOpponents = get(findSelectedObj, "arrOpponents", []);
@@ -103,11 +93,11 @@ export default function HorizontalLinearStepper() {
   };
 
   const onSliderHandler = (value, strId) => {
-    const cloneState = [...arrGlobalState];
+    const cloneState = cloneDeep(arrGlobalState);
     const findSelectedObj = cloneState.find((curr) => curr.id === strId);
     const index = cloneState.findIndex((currObj) => currObj.id === strId);
 
-    findSelectedObj.intValue = +value;
+    findSelectedObj.intValue = Number(value);
     cloneState[index] = findSelectedObj;
     setGlobalState(cloneState);
   };
@@ -192,7 +182,61 @@ export default function HorizontalLinearStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+    console.log([...arrInitialData]);
+    setGlobalState([...arrInitialData]);
   };
+
+  const shouldDisableFirstStep = () => {
+    const arrOne = ['lose_fat', 'get_muscle', 'maintain_weight'];
+    const arrSelectedOneArray = [...arrGlobalState].filter(curr => arrOne.includes(curr.id));
+
+    if (arrSelectedOneArray.length > 0){
+      return arrSelectedOneArray.every(curr => curr.bIsSelected === false);
+    }
+    return false;
+  }
+
+  const shouldDisableSecondStep = () => {
+
+    const arrSecond = ['male', 'female'];
+    const arrSelectedTewoArray = cloneDeep(arrGlobalState).filter(curr => arrSecond.includes(curr.id));
+
+    const arrSecondA = ['metric', 'imperial'];
+    const arrSelectedTewoArrayA = cloneDeep(arrGlobalState).filter(curr => arrSecondA.includes(curr.id));
+
+    const arrThird = ['age', 'height', 'weight'];
+    const arrSelectedThirdArray = cloneDeep(arrGlobalState).filter(curr => arrThird.includes(curr.id));
+
+    if (arrSelectedTewoArrayA.every(curr => curr.bIsSelected === false)) {
+      return true;
+    }
+
+    if (arrSelectedTewoArray.every(curr => curr.bIsSelected === false)) {
+      return true;
+    }
+
+    if (arrSelectedThirdArray.some(curr => curr.intValue <= 0)) {
+      return true;
+    }
+  
+    return false;
+  }
+  const shouldDisableThirdStep = () => {
+    const arrFourth = ['sedentary', 'lightly_active', 'moderately_active', 'very_active'];
+    const arrSelectedFourthArray = [...arrGlobalState].filter(curr => arrFourth.includes(curr.id));
+
+    return arrSelectedFourthArray.every(curr => curr.bIsSelected === false);
+  }
+
+  const shouldDisableNextStep = () => {
+    if (activeStep === 0) {
+      return shouldDisableFirstStep();
+    } else if (activeStep === 1) {
+      return shouldDisableSecondStep();
+    } else if (activeStep === 2){
+      shouldDisableThirdStep();
+    }
+  }
 
   return (
     <Grid className={classes.root}>
@@ -212,7 +256,6 @@ export default function HorizontalLinearStepper() {
         </div>
         <Stepper
           activeStep={activeStep}
-          classes={{ root: { backgroundColor: "red" } }}
           alternativeLabel={true}
         >
           {steps.map((label, index) => {
@@ -229,7 +272,11 @@ export default function HorizontalLinearStepper() {
           })}
         </Stepper>
         {activeStep === steps.length ? (
-          <Finish globalState={arrGlobalState} activeStep={activeStep} handleReset={handleReset} />
+          <Finish
+            globalState={arrGlobalState}
+            activeStep={activeStep}
+            handleReset={handleReset}
+          />
         ) : (
           <div className={classes.card}>
             {getStepContent(activeStep)}
@@ -238,16 +285,16 @@ export default function HorizontalLinearStepper() {
                 variant="contained"
                 onClick={handleNext}
                 className={classes.button_right}
+                disabled={shouldDisableNextStep()}
               >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
-              <Button
-                disabled={activeStep === 0}
+              {activeStep > 0 && <Button
                 onClick={handleBack}
                 className={classes.button}
               >
                 Back
-              </Button>
+              </Button>}
             </div>
           </div>
         )}

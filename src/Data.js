@@ -5,9 +5,8 @@ export const arrInitialData = [
     nodeIcon: "faWeight",
     strSubtitle: 'Get leaner and increase your stamina',
     intValue: -15,
-    bIsSelected: true,
+    bIsSelected: false,
     arrOpponents: ['get_muscle', 'maintain_weight']
-
   },
   {
     id: 'get_muscle',
@@ -63,7 +62,7 @@ export const arrInitialData = [
     id: 'age',
     strLabel: 'Age',
     intValue: 0,
-    min: 12,
+    min: 0,
     max: 100
   },
   {
@@ -77,14 +76,14 @@ export const arrInitialData = [
     id: 'weight',
     strLabel: 'Weight',
     intValue: 0,
-    min: 25,
-    max: 500
+    min: 0,
+    max: 250
   },
   {
     id: 'sedentary',
     strTitle: 'Sedentary',
     strSubtitle: 'Little or no exercise',
-    bIsSelected: true,
+    bIsSelected: false,
     arrOpponents: ['lightly_active', 'moderately_active', 'very_active']
   },
   {

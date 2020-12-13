@@ -127,14 +127,11 @@ const Finish  = ({
       }
     }, {});
 
-   console.log("reduceToObject", reduceToObject);
     if (getGenderValue[0].id === 'male') {
       finalCaloriesGoal = (reduceToObject['weight'].intValue * 10) + (reduceToObject['height'].intValue * 6.25) - (reduceToObject['age'].intValue * 5) + 5;
     } else if (getGenderValue[0].id === 'female') {
       finalCaloriesGoal = (reduceToObject['weight'].intValue * 10) + (reduceToObject['height'].intValue * 6.25) - (reduceToObject['age'].intValue * 5) - 161;
     }
-
-    // console.log("finalCaloriesGoal", finalCaloriesGoal);
 
     const arrAcitivityLevels = ['sedentary', 'lightly_active', 'moderatly_active', 'very_active'];
 

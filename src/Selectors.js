@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px',
   },
   heading: {
-    paddingBottom: '20px',
+    padding: '20px 0 10px 0',
     fontWeight: 'bold'
   },
   icon: {
@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '12px',
     margin: 0,
     alignSelf: 'flex-start',
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
+    fontWeight: 100,
   },
 }));
 

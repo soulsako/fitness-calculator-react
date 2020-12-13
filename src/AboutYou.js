@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons'
@@ -9,20 +8,24 @@ import classnames from 'classnames';
 import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  container_buttons: {
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    width: '100%',
+    justifyContent: 'space-evenly'
   },
   button: {
-    width: '45%',
     border: '2px solid #ddd',
     display: 'flex',
     padding: '15px 20px',
     justifyContent: 'flex-start',
-    marginBottom: '15px',
     borderRadius: '10px',
+    width: 'calc(50% - 20px)',
+    margin: '10px'
+  },
+  slider_container: {
+    padding: '0 20px',
+    marginBottom: '25px'
   },
   heading: {
     fontWeight: 'bold'
@@ -112,13 +115,13 @@ const Selectors = ({
   const onChangeHandler = (value, strId) => onChangeSlider(value, strId);
 
   return (
-    <Grid item xs={12}>
+    <>
       <Typography className={classes.heading}>{
       activeStep === 0 ? "I would like to..." :
       activeStep === 2 ? "My activiy level is..." :
       ""}
       </Typography>
-        <div className={classes.container}>
+        <div className={classes.container_buttons}>
           {modelButtons.map((objGoal, index) => (
               <Button key={objGoal.id}
                 className={classes.button}
@@ -127,7 +130,6 @@ const Selectors = ({
                 style={{
                   backgroundColor: objGoal.bIsSelected ? '#1badb0' : '#fff',
                   color: objGoal.bIsSelected ? '#ffffff' : '#000000',
-                  marginRight: (activeStep === 1 && activeStep % 2 ) ? '10px' : null
                 }}
               >
                 {index === 0 && (
@@ -147,32 +149,34 @@ const Selectors = ({
                 </div>
               </Button>
           ))},
-          {[...arrGlobalState.filter((curr, index) => {
-              return (
-                curr.id === 'age' ||
-                curr.id === 'height' ||
-                curr.id === 'weight'
-              )
-            })].map((slider => (
-            <>
-              <div className={classes.slider_text}>
-              <Typography gutterBottom className={classes.age_first}>{slider.strLabel}</Typography>
-                <Typography gutterBottom className={classes.age}>
-                  {slider.intValue} {slider.id === 'height' ? 'cm' : slider.id === 'weight' ? 'kg' : ''}
-                </Typography>
-              </div>
-                <PrettoSlider
-                  min={slider.min}
-                  max={slider.max}
-                  aria-label="pretto slider"
-                  defaultValue={0}
-                  onChange={(event, value) => onChangeHandler(value, slider.id)}
-                  value={slider.intValue}
-                />
-            </>
-          )))}
         </div>
-    </Grid>
+        <div className={classes.slider_container}>
+            {[...arrGlobalState.filter((curr, index) => {
+                return (
+                  curr.id === 'age' ||
+                  curr.id === 'height' ||
+                  curr.id === 'weight'
+                )
+              })].map((slider => (
+              <>
+                <div className={classes.slider_text}>
+                <Typography gutterBottom className={classes.age_first}>{slider.strLabel}</Typography>
+                  <Typography gutterBottom className={classes.age}>
+                    {slider.intValue} {slider.id === 'height' ? 'cm' : slider.id === 'weight' ? 'kg' : ''}
+                  </Typography>
+                </div>
+                  <PrettoSlider
+                    min={slider.min}
+                    max={slider.max}
+                    aria-label="pretto slider"
+                    defaultValue={0}
+                    onChange={(event, value) => onChangeHandler(value, slider.id)}
+                    value={slider.intValue}
+                  />
+              </>
+            )))}
+        </div>
+    </>
   );
 }
 
