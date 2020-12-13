@@ -67,6 +67,16 @@ export default function HorizontalLinearStepper() {
   const steps = getSteps();
   const [arrGlobalState, setGlobalState] = React.useState(() => cloneDeep(arrInitialData));
 
+  const fieldRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (fieldRef.current) {
+      fieldRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  });
+
   const onHandleItemSelect = (strId) => {
     const cloneState = cloneDeep(arrGlobalState);
     const findSelectedObj = cloneState.find((curr) => curr.id === strId);
@@ -257,6 +267,7 @@ export default function HorizontalLinearStepper() {
         <Stepper
           activeStep={activeStep}
           alternativeLabel={true}
+          ref={fieldRef}
         >
           {steps.map((label, index) => {
             const stepProps = {};
