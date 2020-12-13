@@ -69,10 +69,12 @@ export default function HorizontalLinearStepper() {
 
   const fieldRef = React.useRef(null);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (fieldRef.current) {
       fieldRef.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
       });
     }
   });
@@ -192,7 +194,6 @@ export default function HorizontalLinearStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
-    console.log([...arrInitialData]);
     setGlobalState([...arrInitialData]);
   };
 
@@ -267,7 +268,6 @@ export default function HorizontalLinearStepper() {
         <Stepper
           activeStep={activeStep}
           alternativeLabel={true}
-          ref={fieldRef}
         >
           {steps.map((label, index) => {
             const stepProps = {};
@@ -289,7 +289,7 @@ export default function HorizontalLinearStepper() {
             handleReset={handleReset}
           />
         ) : (
-          <div className={classes.card}>
+          <div className={classes.card} ref={fieldRef}>
             {getStepContent(activeStep)}
             <div className={classes.bottom_buttons}>
               <Button

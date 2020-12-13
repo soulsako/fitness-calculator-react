@@ -185,7 +185,7 @@ const Finish  = ({
   return (
     <div className={classes.card}>
       <Typography variant="h6" className={classes.instructions}>
-        Your Protiein & Calories
+        Your Protein & Calories
       </Typography>
       <div className={classes.card_container}>
         <div className={classes.card_container_left}>
@@ -203,8 +203,8 @@ const Finish  = ({
           <div className={classes.calories}>174g</div>
         </div>
       </div>
-      <p className={classes.email_text}>Enter your best email address below and we'll email you my explanation and keep you in the loop by subscribing you to my famous motivating email list.</p>
-      <input className={classes.input} type="text" placeholder="Enter yout email..."/>
+      <p className={classes.email_text}>Enter your best email address below and we'll email you my explanation and keep you in the loop by subscribing you to our famous motivating email list.</p>
+      <input className={classes.input} type="text" placeholder="Enter your email..."/>
       <div className={classes.checkbox_container}>
         <Checkbox checked={bEmailChecked} onChange={handleChange} />
         <p className={classes.terms}>Please tick the box to confirm that you would like to receive the macro break down email and subscribe to the email list.</p>
