@@ -12,6 +12,25 @@ import { arrInitialData } from "./Data";
 import get from "lodash/get";
 import Finish from './Finish'
 import cloneDeep from 'lodash/cloneDeep';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  overrides: {
+   MuiStepIcon: {
+    root: {
+      '&$completed': {
+        color: '#1badb0',
+      },
+      '&$active': {
+        color: '#1badb0',
+      },
+    },
+    active: {},
+    completed: {},
+    },
+  }
+});
 
 const useStyles = makeStyles({
   root: {
@@ -250,66 +269,68 @@ export default function HorizontalLinearStepper() {
   }
 
   return (
-    <Grid className={classes.root}>
-      <div className={classes.container}>
-        <div className={classes.header}>
-          <Typography
-            variant="h6"
-            align="center"
-            gutterBottom
-            className={classes.title_primary}
-          >
-            Macro Calculator
-          </Typography>
-          <Typography variant="body2" align="center" className={classes.title}>
-            Based on the Harris Benedict formula
-          </Typography>
-        </div>
-        <Stepper
-          activeStep={activeStep}
-          alternativeLabel={true}
-        >
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-        {activeStep === steps.length ? (
-          <Finish
-            globalState={arrGlobalState}
-            activeStep={activeStep}
-            handleReset={handleReset}
-          />
-        ) : (
-          <div className={classes.card} ref={fieldRef}>
-            {getStepContent(activeStep)}
-            <div className={classes.bottom_buttons}>
-              <Button
-                variant="contained"
-                onClick={handleNext}
-                className={classes.button_right}
-                disabled={shouldDisableNextStep()}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-              {activeStep > 0 && <Button
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>}
-            </div>
+    <ThemeProvider theme={theme}>
+      <Grid className={classes.root}>
+        <div className={classes.container}>
+          <div className={classes.header}>
+            <Typography
+              variant="h6"
+              align="center"
+              gutterBottom
+              className={classes.title_primary}
+            >
+              Macro Calculator
+            </Typography>
+            <Typography variant="body2" align="center" className={classes.title}>
+              Based on the Harris Benedict formula
+            </Typography>
           </div>
-        )}
-      </div>
-    </Grid>
+          <Stepper
+            activeStep={activeStep}
+            alternativeLabel={true}
+          >
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
+              if (isStepSkipped(index)) {
+                stepProps.completed = false;
+              }
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+          {activeStep === steps.length ? (
+            <Finish
+              globalState={arrGlobalState}
+              activeStep={activeStep}
+              handleReset={handleReset}
+            />
+          ) : (
+            <div className={classes.card} ref={fieldRef}>
+              {getStepContent(activeStep)}
+              <div className={classes.bottom_buttons}>
+                <Button
+                  variant="contained"
+                  onClick={handleNext}
+                  className={classes.button_right}
+                  disabled={shouldDisableNextStep()}
+                >
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
+                {activeStep > 0 && <Button
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
+                </Button>}
+              </div>
+            </div>
+          )}
+        </div>
+      </Grid>
+    </ThemeProvider>
   );
 }
