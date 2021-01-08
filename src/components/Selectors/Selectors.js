@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
 import useStyles from './style';
 import { arrPageOneItems } from '../../Data';
+import cloneDeep from 'lodash/cloneDeep';
 
 const Selectors = ({
   modelCalculator,
@@ -15,17 +16,15 @@ const Selectors = ({
   arrItems,
 }) => {
   const classes = useStyles();
-  const [objSelectedItems, setSelectedItems] = useState({ goal: 'lose_fat', level: 'sedentary' });
 
   const onChangeItemHandler = (strItemId) => {
+    const cloneModelCalculator = cloneDeep(modelCalculator);
     if (arrPageOneItems.map(objItem => objItem.id).includes(strItemId)) {
-      setSelectedItems((prevState => ({ ...prevState, goal: strItemId})));
-      modelCalculator.goal = strItemId;
+      cloneModelCalculator.goal = strItemId;
     } else {
-      setSelectedItems((prevState => ({ ...prevState, level: strItemId})));
-      modelCalculator.level = strItemId;
+      cloneModelCalculator.level = strItemId;
     }
-    onChange(modelCalculator);
+    onChange(cloneModelCalculator);
   }
 
   return (
@@ -39,26 +38,26 @@ const Selectors = ({
               variant="contained"
               onClick={() => onChangeItemHandler(objItem.id)}
               style={{
-                backgroundColor: Object.values(objSelectedItems).includes(objItem.id) ? '#1badb0' : '#fff',
-                color: Object.values(objSelectedItems).includes(objItem.id) ? '#ffffff' : '#000000',
+                backgroundColor: Object.values(modelCalculator).includes(objItem.id) ? '#1badb0' : '#fff',
+                color: Object.values(modelCalculator).includes(objItem.id) ? '#ffffff' : '#000000',
               }}
             >
               {index === 0 && objItem.nodeIcon && (
               <FontAwesomeIcon icon={faWeight} className={classnames({
                   [classes.icon]: true,
-                  [classes.icon_selected]: Object.values(objSelectedItems).includes(objItem.id),
+                  [classes.icon_selected]: Object.values(modelCalculator).includes(objItem.id),
                 })}
               />)}
               {index === 1 && objItem.nodeIcon && (
               <FontAwesomeIcon icon={faDumbbell} className={classnames({
                   [classes.icon]: true,
-                  [classes.icon_selected]: Object.values(objSelectedItems).includes(objItem.id),
+                  [classes.icon_selected]: Object.values(modelCalculator).includes(objItem.id),
                 })}
               />)}
               {index === 2 && objItem.nodeIcon && (
               <FontAwesomeIcon icon={faUtensils} className={classnames({
                   [classes.icon]: true,
-                  [classes.icon_selected]: Object.values(objSelectedItems).includes(objItem.id),
+                  [classes.icon_selected]: Object.values(modelCalculator).includes(objItem.id),
                 })}
               />)}
               <div className={classes.text_container}>

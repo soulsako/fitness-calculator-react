@@ -15,7 +15,6 @@ import {
   arrPageOneItems,
   arrPageTwoItemsGender,
   arrPageTwoItemsMeasure,
-  arrPageTwoItemsSliders,
   arrPageThreeItems
 } from '../../Data';
 
@@ -45,7 +44,7 @@ const StepperComponent = () => {
           <Selectors
             intActiveStep={step}
             modelCalculator={modelCalculator}
-            onChange={(modelCalculator) => setCalculator(Object.create(modelCalculator))}
+            onChange={(modelCalculator) => setCalculator(modelCalculator)}
             arrItems={arrPageOneItems}
           />
         );
@@ -54,10 +53,9 @@ const StepperComponent = () => {
           <AboutYou
             intActiveStep={step}
             modelCalculator={modelCalculator}
-            onChange={(modelCalculator) => setCalculator(Object.create(modelCalculator))}
+            onChange={(modelCalculator) => setCalculator(modelCalculator)}
             arrItemsOne={arrPageTwoItemsGender}
             arrItemsTwo={arrPageTwoItemsMeasure}
-            arrItemsThree={arrPageTwoItemsSliders}
           />
         );
       case 2:
@@ -65,7 +63,7 @@ const StepperComponent = () => {
           <Selectors
             activeStep={step}
             modelCalculator={modelCalculator}
-            onChange={(modelCalculator) => setCalculator(Object.create(modelCalculator))}
+            onChange={(modelCalculator) => setCalculator(modelCalculator)}
             arrItems={arrPageThreeItems}
           />
       ); 

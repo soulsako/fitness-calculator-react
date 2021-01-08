@@ -6,6 +6,13 @@ import { faFire, faDna } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useStyles from './style';
 
+ const objLevel = {
+  sedentary: 1.2,
+  lightly_active: 1.4,
+  moderately_active: 1.6,
+  very_active: 1.8,
+ };
+
 const Finish  = ({
   modelCalculator,
   intActiveStep,
@@ -15,9 +22,30 @@ const Finish  = ({
   const [bEmailChecked, setChecked] = useState(false);
   const [caloriesTarget, setCaloriesTarget] = useState(0);
   const [proteinTarget, setProtienTarget] = useState(0);
-
+ 
   useEffect(() => {
-    // Calculate here...
+    const { age, gender, goal, height, level, measure, weight } = modelCalculator;
+
+    let intCaloriesTarget = 0;
+
+    intCaloriesTarget = intCaloriesTarget + (Number(weight) * 10);
+    intCaloriesTarget = intCaloriesTarget + (6.25 * Number(height));
+    intCaloriesTarget = intCaloriesTarget - (5 * Number(age));
+    intCaloriesTarget = gender === 'male' ? (intCaloriesTarget + 5) : (intCaloriesTarget - 161);
+
+    // Factor in physical activity
+    const intLevelValue = objLevel[level];
+    intCaloriesTarget = (intCaloriesTarget * intLevelValue);
+
+    // Calculate percentage
+    const intPercValue = (15 / 100) * intCaloriesTarget;
+    // Factor in goal
+    if (goal === 'lose_fat') {
+      intCaloriesTarget = intCaloriesTarget - intPercValue;
+    } else if (goal === 'get_muscle') {
+      intCaloriesTarget = intCaloriesTarget + intPercValue;
+    }
+    setCaloriesTarget(intCaloriesTarget);
   },[]);
 
   const handleChange = (event) => {

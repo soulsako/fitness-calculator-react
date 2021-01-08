@@ -21,34 +21,6 @@ class ModelCalculator {
       'sedentary'
     );
   }
-
-  getGoal(){
-    return this.goal;
-  }
-
-  getGender(){
-    return this.gender;
-  }
-
-  getmeasure(){
-    return this.measure;
-  }
-
-  getAge(){
-    return this.age;
-  }
-
-  getHeight(){
-    return this.height;
-  }
-
-  getWeight(){
-    return this.weight;
-  }
-
-  getLevel(){
-    return this.level;
-  }
 }
 
 export default ModelCalculator;

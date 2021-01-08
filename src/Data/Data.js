@@ -41,26 +41,6 @@ export const arrPageTwoItemsMeasure = [
     strTitle: 'Imperial',
   },
 ];
-export const arrPageTwoItemsSliders= [
-  {
-    id: 'age',
-    strLabel: 'Age',
-    min: 0,
-    max: 100
-  },
-  {
-    id: 'height',
-    strLabel: 'Height',
-    min: 0,
-    max: 320
-  },
-  {
-    id: 'weight',
-    strLabel: 'Weight',
-    min: 0,
-    max: 250
-  },
-];
 
 export const arrPageThreeItems = [
   {

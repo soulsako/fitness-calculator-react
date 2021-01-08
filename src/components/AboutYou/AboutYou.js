@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import Typography from '@material-ui/core/Typography';
+import React from 'react';
 import { faMale, faFemale } from '@fortawesome/free-solid-svg-icons'
-import { useStyles, PrettoSlider } from './style';
+import { useStyles } from './style';
 import Button from '../Button';
+import cloneDeep from 'lodash/cloneDeep';
+import Slider from '../Slider';
 
-const Selectors = ({
+const AboutYou = ({
   arrItemsOne,
   arrItemsTwo,
-  arrItemsThree,
   intActiveStep,
   modelCalculator,
   onChange,
 }) => {
   const classes = useStyles();
-  const [objSelectedItems, setSelectedItems] = useState({ gender:'female', measure: 'metric' });
 
-  const onChangeSliderHandler = (intValue, slideId) => {
-    modelCalculator[slideId] = intValue;
-    onChange(modelCalculator);
+  const onChangeSliderHandler = (intValue, strSliderId) => {
+    const cloneModelCalculator = cloneDeep(modelCalculator);
+    cloneModelCalculator[strSliderId] = intValue;
+
+    onChange(cloneModelCalculator);
   }
 
   const onChangeItemHandler = (strItemId) => {
+    const cloneModelCalculator = cloneDeep(modelCalculator);
     if (arrItemsOne.map(objItem => objItem.id).includes(strItemId)) {
-      setSelectedItems(prevState => ({ ...prevState, gender: strItemId }));
-      modelCalculator.gender = strItemId;
+      cloneModelCalculator.gender = strItemId;
     } else {
-      setSelectedItems(prevState => ({ ...prevState, measure: strItemId }));
-      modelCalculator.measure = strItemId;
+      cloneModelCalculator.measure = strItemId;
     }
-    onChange(modelCalculator);
+    onChange(cloneModelCalculator);
   }
 
   return (
@@ -38,7 +38,7 @@ const Selectors = ({
           <Button
             strId={objItem.id}
             onClick={onChangeItemHandler}
-            bIsSelected={Object.values(objSelectedItems).includes(objItem.id)}
+            bIsSelected={Object.values(modelCalculator).includes(objItem.id)}
             intIndex={index}
             nodeIconOne={faFemale}
             nodeIconTwo={faMale}
@@ -51,41 +51,42 @@ const Selectors = ({
           <Button
             strId={objItem.id}
             onClick={onChangeItemHandler}
-            bIsSelected={Object.values(objSelectedItems).includes(objItem.id)}
+            bIsSelected={Object.values(modelCalculator).includes(objItem.id)}
             intIndex={index}
             strTitle={objItem.strTitle}
           />
         ))}
       </div>
       <div className={classes.slider_container}>
-          {arrItemsThree.map((slider => (
-            <>
-              <div className={classes.slider_text}>
-              <Typography gutterBottom className={classes.age_first}>{slider.strLabel}</Typography>
-                <Typography gutterBottom className={classes.age}>
-                  {slider.id === 'height' ?
-                    `${modelCalculator.getHeight()} cm` : slider.id === 'weight' ?
-                    `${modelCalculator.getWeight()} kg` :
-                    `${modelCalculator.getAge()}`
-                  }
-                </Typography>
-              </div>
-                <PrettoSlider
-                  min={slider.min}
-                  max={slider.max}
-                  aria-label="pretto slider"
-                  defaultValue={0}
-                  onChange={(event, value) => onChangeSliderHandler(value, slider.id)}
-                  value={
-                    slider.id === 'age' ? modelCalculator.age :
-                    slider.id === 'height' ? modelCalculator.height : modelCalculator.weight
-                  }
-                />
-            </>
-          )))}
+          <Slider
+            onChangeSliderHandler={onChangeSliderHandler}
+            strLabel="Age"
+            strId="age"
+            intValue={Number(modelCalculator.age)}
+            intMin={0}
+            intMax={100}
+          />
+          <Slider
+            onChangeSliderHandler={onChangeSliderHandler}
+            strLabel="Height"
+            strId="height"
+            intValue={Number(modelCalculator.height)}
+            intMin={0}
+            intMax={320}
+            strMeasurment="cm"
+          />
+          <Slider
+            onChangeSliderHandler={onChangeSliderHandler}
+            strLabel="Weight"
+            strId="weight"
+            intValue={Number(modelCalculator.weight)}
+            intMin={0}
+            intMax={250}
+            strMeasurment="Kg"
+          />
       </div>
     </>
   );
 }
 
-export default Selectors;
+export default AboutYou;
