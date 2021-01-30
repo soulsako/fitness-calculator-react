@@ -16,6 +16,7 @@ const theme = createMuiTheme({
     active: {},
     completed: {},
     },
+
   },
 });
 

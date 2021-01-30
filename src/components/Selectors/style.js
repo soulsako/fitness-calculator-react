@@ -18,7 +18,8 @@ const useStyles = makeStyles({
   },
   heading: {
     padding: '20px 0 10px 0',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#ffffff',
   },
   icon: {
     fontSize: '35px',

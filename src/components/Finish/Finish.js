@@ -15,7 +15,6 @@ import useStyles from './style';
 
 const Finish  = ({
   modelCalculator,
-  intActiveStep,
   handleReset
 }) => {
   const classes = useStyles();
@@ -24,18 +23,20 @@ const Finish  = ({
   const [proteinTarget, setProtienTarget] = useState(0);
  
   useEffect(() => {
-    const { age, gender, goal, height, level, measure, weight } = modelCalculator;
+    const { age, gender, goal, height, measure, level, weight } = modelCalculator;
 
     let intCaloriesTarget = 0;
+    const strMeasureWeight = measure === 'imperial' ? Math.round((Number(weight) / 2.20462)) : weight;
+    const strMeasureHeight = measure === 'imperial' ? Math.round((Number(height) * 2.54)) : height;
 
-    intCaloriesTarget = intCaloriesTarget + (Number(weight) * 10);
-    intCaloriesTarget = intCaloriesTarget + (6.25 * Number(height));
+    intCaloriesTarget = intCaloriesTarget + (Number(strMeasureWeight) * 10);
+    intCaloriesTarget = intCaloriesTarget + (6.25 * Number(strMeasureHeight));
     intCaloriesTarget = intCaloriesTarget - (5 * Number(age));
     intCaloriesTarget = gender === 'male' ? (intCaloriesTarget + 5) : (intCaloriesTarget - 161);
 
     // Factor in physical activity
     const intLevelValue = objLevel[level];
-    intCaloriesTarget = (intCaloriesTarget * intLevelValue);
+    intCaloriesTarget = (Math.ceil(intCaloriesTarget) * intLevelValue);
 
     // Calculate percentage
     const intPercValue = (15 / 100) * intCaloriesTarget;
@@ -45,7 +46,8 @@ const Finish  = ({
     } else if (goal === 'get_muscle') {
       intCaloriesTarget = intCaloriesTarget + intPercValue;
     }
-    setCaloriesTarget(intCaloriesTarget);
+    setCaloriesTarget(Math.round(intCaloriesTarget));
+    setProtienTarget(gender === 'male' ? Math.round(Number(strMeasureWeight) * 1.5) :  Math.round(Number(strMeasureWeight) * 1.2))
   },[]);
 
   const handleChange = (event) => {
@@ -70,17 +72,11 @@ const Finish  = ({
           <FontAwesomeIcon icon={faDna} className={classes.icons} />
             <div className={classes.card_text}>Protein Target</div>
           </div>
-          <div className={classes.calories}>174g</div>
+          <div className={classes.calories}>{proteinTarget}</div>
         </div>
       </div>
-      <p className={classes.email_text}>Enter your best email address below and we'll email you my explanation and keep you in the loop by subscribing you to our famous motivating email list.</p>
-      <input className={classes.input} type="text" placeholder="Enter your email..."/>
-      <div className={classes.checkbox_container}>
-        <Checkbox checked={bEmailChecked} onChange={handleChange} />
-        <p className={classes.terms}>Please tick the box to confirm that you would like to receive the macro break down email and subscribe to the email list.</p>
-      </div>
-      <Button onClick={() => {}} className={classes.button_right}>
-        Send
+      <Button className={classes.detailed_results_button} variant="contained">
+        Get Detailed results
       </Button>
       <Button onClick={handleReset} className={classes.button}>
         Reset

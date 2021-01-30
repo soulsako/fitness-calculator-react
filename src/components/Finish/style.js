@@ -1,7 +1,7 @@
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   card_container: {
     width: '100%',
     display: 'flex',
@@ -47,28 +47,19 @@ const useStyles = makeStyles({
     paddingBottom: '15px',
     textAlign: 'center',
     marginTop: '20px',
-    marginBottom: '15px'
+    marginBottom: '15px',
+    color: '#ffffff'
   },
   card: {
-    padding: '0px 15px'
-  },
-  checkbox_container: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: '15px'
-  },
-  terms: {
-    fontSize: '10px'
-  },
-  input: {
-    width: '100%',
-    height: '30px',
-    paddingLeft: '10px'
+    padding: '0px 15px',
+    textAlign: 'center',
   },
   button: {
     marginRight: "8px",
     display: 'block',
     width: '100%',
+    color: '#ffffff',
+    marginBottom: '25px',
   },
   button_right: {
     backgroundColor: "#1badb0",
@@ -79,10 +70,17 @@ const useStyles = makeStyles({
     display: 'block',
     marginTop: '25px'
   },
-  email_text: {
+  detailed_results_button: {
     fontSize: '14px',
-    marginBottom: '30px'
-  }
-});
+    marginBottom: '30px',
+    color: '#ffffff',
+    backgroundColor: '#1badb0',
+    padding: '15px 25px',
+    borderRadius: '5px',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: '40px'
+  },
+}));
 
 export default useStyles;

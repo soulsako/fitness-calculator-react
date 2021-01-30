@@ -8,7 +8,6 @@ import Slider from '../Slider';
 const AboutYou = ({
   arrItemsOne,
   arrItemsTwo,
-  intActiveStep,
   modelCalculator,
   onChange,
 }) => {
@@ -23,13 +22,26 @@ const AboutYou = ({
 
   const onChangeItemHandler = (strItemId) => {
     const cloneModelCalculator = cloneDeep(modelCalculator);
+
     if (arrItemsOne.map(objItem => objItem.id).includes(strItemId)) {
       cloneModelCalculator.gender = strItemId;
     } else {
+      if (strItemId === 'imperial') {
+        cloneModelCalculator.height = Math.round((cloneModelCalculator.height / 2.54));
+        cloneModelCalculator.weight = Math.round((cloneModelCalculator.weight * 2.20462));
+      } else {
+        if (cloneModelCalculator.measure === 'imperial') {
+          cloneModelCalculator.height = Math.round((cloneModelCalculator.height * 2.54));
+          cloneModelCalculator.weight = Math.round((cloneModelCalculator.weight / 2.20462));
+        }
+      }
       cloneModelCalculator.measure = strItemId;
     }
     onChange(cloneModelCalculator);
   }
+
+  const bIsImperial = Object.values(modelCalculator).includes('imperial');
+  const { height, weight, age } = modelCalculator;
 
   return (
     <>
@@ -40,8 +52,8 @@ const AboutYou = ({
             onClick={onChangeItemHandler}
             bIsSelected={Object.values(modelCalculator).includes(objItem.id)}
             intIndex={index}
-            nodeIconOne={faFemale}
-            nodeIconTwo={faMale}
+            nodeIconOne={faMale}
+            nodeIconTwo={faFemale}
             strTitle={objItem.strTitle}
           />
         ))}
@@ -62,7 +74,7 @@ const AboutYou = ({
             onChangeSliderHandler={onChangeSliderHandler}
             strLabel="Age"
             strId="age"
-            intValue={Number(modelCalculator.age)}
+            intValue={Number(age)}
             intMin={0}
             intMax={100}
           />
@@ -70,19 +82,19 @@ const AboutYou = ({
             onChangeSliderHandler={onChangeSliderHandler}
             strLabel="Height"
             strId="height"
-            intValue={Number(modelCalculator.height)}
+            intValue={height}
             intMin={0}
-            intMax={320}
-            strMeasurment="cm"
+            intMax={bIsImperial ? Math.round((320 / 2.54)) : 320}
+            strMeasurment={bIsImperial ? 'inches' : 'cm'}
           />
           <Slider
             onChangeSliderHandler={onChangeSliderHandler}
             strLabel="Weight"
             strId="weight"
-            intValue={Number(modelCalculator.weight)}
+            intValue={weight}
             intMin={0}
-            intMax={250}
-            strMeasurment="Kg"
+            intMax={bIsImperial ? Math.round((250 * 2.20462)) : 250}
+            strMeasurment={bIsImperial ? 'lbs' : 'Kg'}
           />
       </div>
     </>

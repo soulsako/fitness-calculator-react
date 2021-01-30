@@ -103,6 +103,7 @@ const StepperComponent = () => {
         <Stepper
           activeStep={activeStep}
           alternativeLabel={true}
+          classes={{ root: classes.root_stepper}}
         >
           {steps.map((label, index) => {
             const stepProps = {};
@@ -112,7 +113,7 @@ const StepperComponent = () => {
             }
             return (
               <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+                <StepLabel {...labelProps} classes={{ label: classes.step_label }}>{label}</StepLabel>
               </Step>
             );
           })}
@@ -130,7 +131,12 @@ const StepperComponent = () => {
               <Button
                 variant="contained"
                 onClick={handleNext}
-                className={classes.button_right}
+                style={{
+                  backgroundColor: '#1badb0',
+                  color: '#fff',
+                  marginBottom: "10px",
+                  fontWeight: "bold"
+                }}
               >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>

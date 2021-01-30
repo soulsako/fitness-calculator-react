@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
+    color: '#ffffff'
   },
   age_first: {
     marginTop: '20px',

@@ -11,6 +11,7 @@ import Menu from './Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColor: '#000000'
   },
   menuButton: {
     marginRight: '16px',
@@ -18,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  home_link: {
+    textDecoration: 'none',
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: '16px'
+  }
 }));
 
 export default function ButtonAppBar() {
@@ -33,7 +40,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Balistic Performance
           </Typography>
-          <Button color="inherit">Home</Button>
+          <a href="https://ballisticperformance.co.uk" className={classes.home_link}>Home</a>
         </Toolbar>
       </AppBar>
     </div>

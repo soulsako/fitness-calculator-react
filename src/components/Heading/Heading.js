@@ -14,10 +14,7 @@ const Heading = () => {
         gutterBottom
         className={classes.title_primary}
       >
-        Macro Calculator
-      </Typography>
-      <Typography variant="body2" align="center" className={classes.title}>
-        Based on the Harris Benedict formula
+        Calorie Calculator
       </Typography>
     </div>
   );

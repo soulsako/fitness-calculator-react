@@ -1,21 +1,18 @@
 export const arrPageOneItems = [
   {
     id: 'lose_fat',
-    strTitle: 'Lose Fat',
+    strTitle: 'Lose Body Fat',
     nodeIcon: "faWeight",
-    strSubtitle: 'Get leaner and increase your stamina',
   },
   {
     id: 'get_muscle',
-    strTitle: 'Get Muscle',
+    strTitle: 'Build Muscle',
     nodeIcon: "faDumbbell",
-    strSubtitle: 'Build muscle strength',
   },
   {
     id: 'maintain_weight',
     strTitle: 'Maintain Weight',
     nodeIcon: "faUtensils",
-    strSubtitle: 'Eat and train for optimum health',
   },
 ];
 
@@ -23,14 +20,15 @@ export const arrPageTwoItemsGender = [
   {
     id: 'male',
     strTitle: 'Male',
-    nodeIcon: "faMale",
+    nodeIcon: "feMale",
   },
   {
     id: 'female',
     strTitle: 'Female',
-    nodeIcon: "faFemale",
+    nodeIcon: "feFemale",
   },
 ];
+
 export const arrPageTwoItemsMeasure = [
   {
     id: 'metric',
