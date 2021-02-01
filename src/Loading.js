@@ -25,7 +25,7 @@ const Loading = ({
   children,
 }) => {
 const classes = useStyles();
-const [bLoading, setLoading] = useState(true);
+const [bLoading, setLoading] = useState(false);
 
 useEffect(() => {
   setTimeout(() => {
