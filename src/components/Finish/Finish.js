@@ -75,6 +75,11 @@ const Finish  = ({
           <div className={classes.calories}>{proteinTarget}</div>
         </div>
       </div>
+      <p className={classes.explanation}>
+      If you would like an explanation of your calorie and protein target and why it might be different to other estimations you have previously had leave your email below. 
+Leaving your email address we will add you to our Email Subscription where we can keep you updated with everything happening at Ballistic Performance and health & fitness info. 
+
+      </p>
       <Button className={classes.detailed_results_button} variant="contained">
         Get Detailed results
       </Button>

@@ -43,6 +43,10 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 'bold',
     color: '#1badb0'
   },
+  explanation: {
+    color: '#ffffff',
+    marginTop: '45px'
+  },
   instructions: {
     paddingBottom: '15px',
     textAlign: 'center',
