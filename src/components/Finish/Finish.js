@@ -54,6 +54,8 @@ const Finish  = ({
     setChecked(event.target.checked);
   };
 
+  const externalUrlHandler = () => window.location.href = 'https://ballisticperformance.co.uk/ask-a-question';
+
   return (
     <div className={classes.card}>
       <Typography variant="h6" className={classes.instructions}>
@@ -80,7 +82,7 @@ const Finish  = ({
 Leaving your email address we will add you to our Email Subscription where we can keep you updated with everything happening at Ballistic Performance and health & fitness info. 
 
       </p>
-      <Button className={classes.detailed_results_button} variant="contained">
+      <Button className={classes.detailed_results_button} onClick={externalUrlHandler} variant="contained">
         Get Detailed results
       </Button>
       <Button onClick={handleReset} className={classes.button}>
