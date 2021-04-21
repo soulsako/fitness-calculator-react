@@ -54,7 +54,7 @@ const Finish  = ({
     setChecked(event.target.checked);
   };
 
-  const externalUrlHandler = () => window.location.href = 'https://ballisticperformance.co.uk/ask-a-question';
+  const externalUrlHandler = () => window.location.href = 'https://ballisticperformance.co.uk/detailed-results';
 
   return (
     <div className={classes.card}>
